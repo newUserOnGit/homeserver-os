@@ -30,8 +30,20 @@ Thumbs.db
 # Logs
 *.log
 
-# Linux kernel source (1.6GB - excluded from repo)
+# Linux kernel source (1.6GB)
 linux-kernel/
+
+# Git scripts (not needed in repo)
+git-*.sh
+git-*.bat
+git-*.ps1
+*-git-*.sh
+*-git-*.bat
+
+# Temporary docs
+*_OLD.*
+*_TEMP.*
+TEMP_*
 
 # Don't ignore build scripts
 !build/scripts/
