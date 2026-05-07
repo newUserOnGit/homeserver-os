@@ -12,7 +12,7 @@ NC='\033[0m' # No Color
 
 # Directories
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-KERNEL_SRC="${PROJECT_ROOT}/linux-kernel"
+KERNEL_SRC="${PROJECT_ROOT}/linux-kernel/source"
 BUILD_DIR="${PROJECT_ROOT}/build"
 CONFIG_DIR="${PROJECT_ROOT}/config"
 OUTPUT_DIR="${BUILD_DIR}/kernel-output"
