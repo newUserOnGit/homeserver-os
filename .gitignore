@@ -1,0 +1,131 @@
+# Build artifacts
+build/
+*.bin
+*.iso
+*.o
+*.elf
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.bak
+
+# Compiled files
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Dependencies
+*.d
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Test outputs
+tests/*.log
+tests/output/
+
+# Virtual machine files
+*.vmdk
+*.vdi
+*.qcow2
+*.vhd
+
+# Backup files
+*.backup
+*~
+
+# Node modules (if using any JS tools)
+node_modules/
+
+# Python cache (if using any Python tools)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local configuration
+*.local
+.env
+.env.local
+
+# IDE specific
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Documentation build
+docs/_build/
+docs/.doctrees/
+
+# Coverage reports
+coverage/
+*.gcov
+*.gcda
+*.gcno
+
+# Profiling data
+*.prof
+gmon.out
+
+# Core dumps
+core
+core.*
+
+# System specific
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Mounted directories
+/mnt/
+/media/
+
+# ISO build directory
+iso/
+
+# GRUB files
+*.img
+*.mod
+*.lst
+
+# Kernel debug symbols
+vmlinux
+System.map
+
+# Toolchain
+toolchain/
+cross/
+
+# Package manager
+*.deb
+*.rpm
+*.pkg.tar.xz
