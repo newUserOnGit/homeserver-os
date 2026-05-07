@@ -1,0 +1,73 @@
+# Home Server OS Version Information
+
+VERSION_MAJOR=0
+VERSION_MINOR=1
+VERSION_PATCH=0
+VERSION_BUILD=1
+VERSION_CODENAME="Alpha"
+
+# Full version string
+VERSION="${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
+VERSION_FULL="${VERSION}-${VERSION_CODENAME}"
+
+# Build information
+BUILD_DATE="2026-05-07"
+BUILD_TIME="07:47:48"
+BUILD_TIMESTAMP="2026-05-07T07:47:48.789Z"
+
+# System information
+SYSTEM_NAME="Home Server OS"
+SYSTEM_ARCH="x86_64"
+KERNEL_VERSION="0.1.0"
+
+# Release information
+RELEASE_TYPE="alpha"
+RELEASE_CHANNEL="development"
+
+# Repository information
+REPO_URL="https://github.com/homeserver-os/homeserver-os"
+DOCS_URL="https://docs.homeserver-os.org"
+SUPPORT_URL="https://forum.homeserver-os.org"
+
+# Minimum requirements
+MIN_RAM_MB=512
+MIN_DISK_GB=4
+MIN_CPU_CORES=1
+
+# Recommended requirements
+REC_RAM_MB=4096
+REC_DISK_GB=100
+REC_CPU_CORES=2
+
+# Feature flags
+FEATURE_CONTAINERS=1
+FEATURE_VMS=1
+FEATURE_WEB_UI=1
+FEATURE_REST_API=1
+FEATURE_MONITORING=1
+FEATURE_BACKUP=1
+FEATURE_FIREWALL=1
+
+# Limits
+MAX_CONTAINERS=10
+MAX_VMS=5
+MAX_USERS=64
+MAX_FIREWALL_RULES=256
+
+# Network configuration
+DEFAULT_WEB_PORT=8080
+DEFAULT_API_PORT=8081
+DEFAULT_SSH_PORT=22
+
+# Print version information
+print_version() {
+    echo "$SYSTEM_NAME v$VERSION_FULL"
+    echo "Build: $BUILD_DATE $BUILD_TIME"
+    echo "Architecture: $SYSTEM_ARCH"
+    echo "Kernel: $KERNEL_VERSION"
+}
+
+# Export for use in other scripts
+export VERSION VERSION_FULL SYSTEM_NAME SYSTEM_ARCH
+export BUILD_DATE BUILD_TIME BUILD_TIMESTAMP
+export KERNEL_VERSION RELEASE_TYPE RELEASE_CHANNEL

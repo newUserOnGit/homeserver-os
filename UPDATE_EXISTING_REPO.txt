@@ -1,0 +1,272 @@
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║     ОБНОВЛЕНИЕ РЕПОЗИТОРИЯ С ИНТЕГРИРОВАННЫМ ЯДРОМ LINUX         ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+📍 Ваш репозиторий: https://github.com/newUserOnGit/homeserver-os.git
+📍 Текущая ветка: main
+
+═══════════════════════════════════════════════════════════════════
+
+🚀 ИНСТРУКЦИЯ ДЛЯ GIT BASH:
+
+Откройте Git Bash и выполните следующие команды:
+
+═══════════════════════════════════════════════════════════════════
+
+ШАГ 1: Перейдите в директорию с обновленным проектом
+------------------------------------------------------
+
+cd /c/Custom-server-os
+
+═══════════════════════════════════════════════════════════════════
+
+ШАГ 2: Инициализируйте Git (если еще не сделано)
+-------------------------------------------------
+
+git init
+
+═══════════════════════════════════════════════════════════════════
+
+ШАГ 3: Добавьте ваш существующий репозиторий
+---------------------------------------------
+
+git remote add origin https://github.com/newUserOnGit/homeserver-os.git
+
+# Если выдаст ошибку "remote origin already exists", выполните:
+git remote set-url origin https://github.com/newUserOnGit/homeserver-os.git
+
+═══════════════════════════════════════════════════════════════════
+
+ШАГ 4: Создайте .gitignore (чтобы не загружать лишнее)
+-------------------------------------------------------
+
+cat > .gitignore << 'EOF'
+# Build artifacts
+build/kernel-output/
+build/rootfs/
+build/iso/
+*.iso
+*.bin
+*.o
+*.ko
+
+# Compiled files
+*.out
+*.exe
+*.dll
+*.so
+
+# Temporary files
+*.tmp
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Don't ignore build scripts
+!build/scripts/
+EOF
+
+═══════════════════════════════════════════════════════════════════
+
+ШАГ 5: Добавьте все файлы
+--------------------------
+
+git add .
+
+═══════════════════════════════════════════════════════════════════
+
+ШАГ 6: Создайте коммит
+-----------------------
+
+git commit -m "feat: integrate Linux kernel 6.12.28
+
+Major update: Integration of Linux kernel 6.12.28
+
+Changes:
+- Integrated Linux kernel 6.12.28 from C:/core
+- Created optimized kernel configuration for server use
+- Set up automated build system (Makefile + bash scripts)
+- Added comprehensive documentation (20+ files)
+- Configured KVM virtualization support (Intel/AMD)
+- Enabled container support (namespaces, cgroups, Docker/LXC)
+- Set up network stack (bridge, VLAN, firewall)
+- Added LVM/RAID support (0/1/5/6/10)
+- Configured modern filesystems (ext4, btrfs, xfs, overlay)
+- Added security features (SELinux, AppArmor)
+
+Architecture:
+- Hybrid approach: Linux kernel + custom Home Server OS components
+- Isolated development environment (C:/Custom-server-os)
+- Production-ready kernel with custom userspace
+
+Documentation:
+- INTEGRATION_STRATEGY.md - Integration strategy
+- INTEGRATION_COMPLETE.md - Complete integration report
+- INTEGRATION_REPORT.md - Execution report
+- README.md - Updated main documentation
+- QUICK_START.txt - Quick start guide
+- GIT_PUSH_GUIDE.md - Git workflow guide
+
+Build System:
+- build/scripts/build-kernel.sh - Kernel build script
+- build/scripts/build-rootfs.sh - Root filesystem builder
+- build/scripts/build-iso.sh - ISO image creator
+- Makefile - Main build system
+
+Version: 0.2.0
+Status: Ready for build in Linux environment (WSL/VM)
+Size: ~1.6 GB (including Linux kernel source)
+
+Co-Authored-By: Claude Sonnet 4 (1M context) <noreply@anthropic.com>"
+
+═══════════════════════════════════════════════════════════════════
+
+ШАГ 7: Получите последние изменения из репозитория
+---------------------------------------------------
+
+# Сначала получим изменения из удаленного репозитория
+git fetch origin main
+
+# Объединим с локальными изменениями (разрешим несвязанные истории)
+git pull origin main --allow-unrelated-histories --no-rebase
+
+# Если возникнут конфликты, разрешите их и выполните:
+# git add .
+# git commit -m "merge: resolve conflicts"
+
+═══════════════════════════════════════════════════════════════════
+
+ШАГ 8: Отправьте изменения на GitHub
+-------------------------------------
+
+git push origin main
+
+═══════════════════════════════════════════════════════════════════
+
+⚠️ ВАЖНО - РАЗМЕР РЕПОЗИТОРИЯ:
+
+Проект занимает ~1.6 GB из-за ядра Linux.
+GitHub может отклонить файлы >100MB.
+
+ЕСЛИ ВОЗНИКНЕТ ОШИБКА "file too large":
+
+Вариант 1: Исключить ядро из репозитория
+-----------------------------------------
+echo "linux-kernel/" >> .gitignore
+git rm -r --cached linux-kernel/
+git add .gitignore
+git commit -m "chore: exclude linux kernel from repository
+
+Linux kernel source (1.6GB) excluded from Git.
+Download separately from: https://kernel.org/
+Version: 6.12.28"
+git push origin main
+
+Вариант 2: Использовать Git LFS
+--------------------------------
+git lfs install
+git lfs track "linux-kernel/**/*.c"
+git lfs track "linux-kernel/**/*.h"
+git add .gitattributes
+git commit -m "chore: add Git LFS for large files"
+git push origin main
+
+═══════════════════════════════════════════════════════════════════
+
+📊 АЛЬТЕРНАТИВНЫЙ ПОДХОД (Рекомендуется):
+
+Создайте новую ветку для интеграции Linux:
+-------------------------------------------
+
+cd /c/Custom-server-os
+git init
+git remote add origin https://github.com/newUserOnGit/homeserver-os.git
+git fetch origin main
+git checkout -b linux-integration
+
+# Добавьте .gitignore чтобы исключить ядро
+echo "linux-kernel/" >> .gitignore
+
+git add .
+git commit -m "feat: integrate Linux kernel 6.12.28 (without kernel source)"
+git push -u origin linux-integration
+
+# Затем создайте Pull Request на GitHub для слияния с main
+
+═══════════════════════════════════════════════════════════════════
+
+✅ ПОСЛЕ УСПЕШНОЙ ОТПРАВКИ:
+
+1. Проверьте репозиторий:
+   https://github.com/newUserOnGit/homeserver-os
+
+2. Создайте Release v0.2.0:
+   - Перейдите в "Releases" → "Create a new release"
+   - Tag: v0.2.0
+   - Title: "v0.2.0 - Linux Kernel Integration"
+   - Описание: скопируйте из INTEGRATION_COMPLETE.md
+
+3. Обновите README на GitHub (если нужно)
+
+4. Добавьте темы (topics):
+   - linux
+   - operating-system
+   - server
+   - kernel
+   - virtualization
+   - kvm
+   - docker
+
+═══════════════════════════════════════════════════════════════════
+
+🔧 ПОЛЕЗНЫЕ КОМАНДЫ:
+
+# Проверить статус
+git status
+
+# Посмотреть удаленные репозитории
+git remote -v
+
+# Посмотреть историю
+git log --oneline
+
+# Отменить последний коммит (если нужно)
+git reset --soft HEAD~1
+
+# Принудительная отправка (осторожно!)
+git push -f origin main
+
+═══════════════════════════════════════════════════════════════════
+
+📞 ЕСЛИ ВОЗНИКЛИ ПРОБЛЕМЫ:
+
+1. Ошибка аутентификации:
+   - Используйте Personal Access Token вместо пароля
+   - https://github.com/settings/tokens
+
+2. Конфликты при merge:
+   - Разрешите конфликты вручную
+   - git add .
+   - git commit -m "merge: resolve conflicts"
+
+3. Файлы слишком большие:
+   - Исключите linux-kernel/ через .gitignore
+   - Или используйте Git LFS
+
+═══════════════════════════════════════════════════════════════════
+
+Дата: 2026-05-07
+Репозиторий: https://github.com/newUserOnGit/homeserver-os.git
+Версия: 0.2.0 - Linux Integration
+
+═══════════════════════════════════════════════════════════════════
