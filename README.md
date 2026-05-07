@@ -265,8 +265,8 @@ git push origin feature/amazing-feature
 
 ## 📞 Контакты
 
-- **GitHub:** https://github.com/yourusername/custom-server-os
-- **Issues:** https://github.com/yourusername/custom-server-os/issues
+- **GitHub:** https://github.com/newUserOnGit/homeserver-os
+- **Issues:** https://github.com/newUserOnGit/homeserver-os/issues
 
 ## ⚠️ Важно
 
