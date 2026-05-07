@@ -1,1 +1,37 @@
+# Build artifacts
+build/kernel-output/
+build/rootfs/
+build/iso/
+*.iso
+*.bin
+*.o
+*.ko
+
+# Compiled files
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Logs
+*.log
+
+# Linux kernel source (1.6GB - excluded from repo)
 linux-kernel/
+
+# Don't ignore build scripts
+!build/scripts/
