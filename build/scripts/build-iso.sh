@@ -51,17 +51,17 @@ set timeout=5
 set default=0
 
 menuentry "Custom Server OS - Linux Edition" {
-    linux /boot/vmlinuz quiet
+    linux /boot/vmlinuz rdinit=/init console=tty0 console=ttyS0,115200
     initrd /boot/initramfs.gz
 }
 
 menuentry "Custom Server OS - Debug Mode" {
-    linux /boot/vmlinuz debug loglevel=7
+    linux /boot/vmlinuz rdinit=/init console=tty0 console=ttyS0,115200 debug loglevel=7
     initrd /boot/initramfs.gz
 }
 
 menuentry "Custom Server OS - Single User Mode" {
-    linux /boot/vmlinuz single
+    linux /boot/vmlinuz rdinit=/init console=tty0 console=ttyS0,115200 single
     initrd /boot/initramfs.gz
 }
 EOF

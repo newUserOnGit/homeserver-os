@@ -25,15 +25,16 @@ mkdir -p "${ROOTFS_DIR}"/{bin,sbin,etc,proc,sys,dev,tmp,var,usr/{bin,sbin,lib},l
 # Set permissions
 chmod 1777 "${ROOTFS_DIR}/tmp"
 
-# Create essential device nodes
-echo -e "${YELLOW}Creating device nodes...${NC}"
-cd "${ROOTFS_DIR}/dev"
-sudo mknod -m 666 null c 1 3
-sudo mknod -m 666 zero c 1 5
-sudo mknod -m 666 random c 1 8
-sudo mknod -m 666 urandom c 1 9
-sudo mknod -m 666 tty c 5 0
-sudo mknod -m 600 console c 5 1
+# Device nodes will be created by devtmpfs at boot
+echo -e "${YELLOW}Device nodes will be created by devtmpfs at boot...${NC}"
+
+# Check if busybox is already installed
+if [ ! -f "${ROOTFS_DIR}/bin/busybox" ]; then
+    echo -e "${YELLOW}Busybox not found in rootfs. Please install it manually.${NC}"
+    echo "Run: cd ${BUILD_DIR} && wget -O busybox https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox"
+    echo "Then: cp busybox rootfs/bin/ && cd rootfs/bin && ./busybox --install -s ."
+    exit 1
+fi
 
 # Copy kernel modules
 if [ -d "${KERNEL_OUTPUT}/lib/modules" ]; then
@@ -45,48 +46,83 @@ fi
 echo -e "${YELLOW}Creating init script...${NC}"
 cat > "${ROOTFS_DIR}/init" << 'EOF'
 #!/bin/sh
+# Enhanced init script for Custom Server OS
+# With detailed debugging output
 
-# Mount essential filesystems
-mount -t proc none /proc
-mount -t sysfs none /sys
-mount -t devtmpfs none /dev
-
-# Create additional device nodes
-mknod /dev/null c 1 3 2>/dev/null || true
-mknod /dev/console c 5 1 2>/dev/null || true
-
-# Clear screen
-clear
-
-# Welcome message
 echo "=========================================="
-echo "   Custom Server OS - Linux Edition"
-echo "   Based on Linux Kernel 6.12.28"
+echo "  Custom Server OS - Init Starting"
 echo "=========================================="
 echo ""
-echo "Initializing system..."
 
-# Load kernel modules
-echo "Loading kernel modules..."
-find /lib/modules -name '*.ko' -exec insmod {} \; 2>/dev/null || true
+# Function to print with timestamp
+log() {
+    echo "[INIT] $1"
+}
 
-# Setup network
-echo "Configuring network..."
-ip link set lo up
-ip addr add 127.0.0.1/8 dev lo
+log "Step 1: Mounting essential filesystems..."
 
-# Mount tmpfs
-mount -t tmpfs tmpfs /tmp
-mount -t tmpfs tmpfs /var
+# Mount proc
+log "Mounting /proc..."
+mount -t proc proc /proc || log "ERROR: Failed to mount /proc"
+
+# Mount sysfs
+log "Mounting /sys..."
+mount -t sysfs sysfs /sys || log "ERROR: Failed to mount /sys"
+
+# Mount devtmpfs
+log "Mounting /dev..."
+mount -t devtmpfs devtmpfs /dev || log "ERROR: Failed to mount /dev"
+
+log "Essential filesystems mounted successfully!"
+
+# Create additional device nodes if needed
+log "Step 2: Creating device nodes..."
+mknod /dev/null c 1 3 2>/dev/null || log "WARNING: /dev/null already exists"
+mknod /dev/console c 5 1 2>/dev/null || log "WARNING: /dev/console already exists"
+mknod /dev/tty c 5 0 2>/dev/null || log "WARNING: /dev/tty already exists"
+
+log "Step 3: Setting up environment..."
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+export HOME=/root
+export TERM=linux
+
+log "Step 4: Mounting additional filesystems..."
+mount -t tmpfs tmpfs /tmp 2>/dev/null || log "WARNING: Failed to mount /tmp"
+mount -t tmpfs tmpfs /var 2>/dev/null || log "WARNING: Failed to mount /var"
 
 # Create necessary directories
-mkdir -p /var/log /var/run /var/lock
+log "Creating system directories..."
+mkdir -p /var/log /var/run /var/lock /var/tmp 2>/dev/null
 
+log "Step 5: Setting up network..."
+ip link set lo up 2>/dev/null || log "WARNING: Failed to bring up loopback"
+ip addr add 127.0.0.1/8 dev lo 2>/dev/null || log "WARNING: Failed to set loopback address"
+
+log "Step 6: System information..."
+log "Kernel: $(uname -r)"
+log "Hostname: $(hostname)"
+log "Available commands: $(ls /bin | wc -l) binaries in /bin"
+
+echo ""
+echo "=========================================="
+echo "  Custom Server OS - Linux Edition"
+echo "  Based on Linux Kernel 6.12.28"
+echo "=========================================="
 echo ""
 echo "System initialized successfully!"
 echo ""
+echo "Available commands:"
+echo "  ls, cat, ps, top, free, df, mount, ip, ping"
+echo "  vi, grep, find, tar, gzip, wget, curl"
+echo ""
+echo "Type 'help' for busybox command list"
+echo "Type 'uname -a' for kernel information"
+echo ""
+echo "Login: root (no password required)"
+echo ""
 
-# Start shell
+# Start interactive shell
+log "Starting shell..."
 exec /bin/sh
 EOF
 
